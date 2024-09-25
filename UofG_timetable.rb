@@ -22,18 +22,17 @@ sleep 5
 
 wkAgenda = driver.find_elements(class: "weekViewContainer")
 wkAgenda.each { |w|
-    puts "hello"
-    perDay = driver.find_elements(class: "agendaContainer Week")
+    perDay = w.find_elements(tag_name: "table")
     perDay.each do |d|
         date = d.find_element(tag_name: "h1").text
-        puts date
+        puts "\nDate: #{date}"
         event = d.find_elements(class: "agendaEvent")
         event.each do |e|
             starting_time = e.find_element(tag_name: "p").text
             ending_time = e.find_element(tag_name: "br").text
             title = e.find_element(class: "event-title").text
-            location = e.find_element({relative: {tag_name: 'h2', below: {tag_name: 'br'}, below: {tag_name:'div'}}})
-            puts "lol"
+            location = e.find_element({relative: {tag_name: 'h2', below: {class: "event-title"}}}).text
+            puts "Title: #{title}\nLocation: #{location}"
         end   
     end
 }
