@@ -19,7 +19,8 @@ wait.until { driver.find_element(class: "viewButtonContainer") }
 sleep 1
 driver.find_element(xpath: "/html/body/div/div/div/section[1]/div[2]/div[2]/button").click
 sleep 5
-
+i = 1
+agenda = [["Date", "Begins from", "Ends at", "Title", "Location"]]
 wkAgenda = driver.find_elements(class: "weekViewContainer")
 wkAgenda.each { |w|
     perDay = w.find_elements(tag_name: "table")
@@ -28,13 +29,17 @@ wkAgenda.each { |w|
         puts "\nDate: #{date}"
         event = d.find_elements(class: "agendaEvent")
         event.each do |e|
-            starting_time = e.find_element(tag_name: "p").text
-            ending_time = e.find_element(tag_name: "br").text
+            time = e.find_element(class: "class-times").text.split("\n")
+            starting_time = time[0]
+            ending_time = time[2]
             title = e.find_element(class: "event-title").text
             location = e.find_element({relative: {tag_name: 'h2', below: {class: "event-title"}}}).text
-            puts "Title: #{title}\nLocation: #{location}"
+            agenda[i] = [date, starting_time, ending_time, title, location]
+            puts "#{agenda}"
+            i += 1
         end   
     end
 }
+File.write("timetable.csv", agenda.map(&:to_csv).join)
 
 driver.quit
