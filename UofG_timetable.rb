@@ -1,5 +1,6 @@
 require 'selenium-webdriver'
 require 'csv'
+require 'google/apis/calendar_v3'
 
 puts "When is the begining of the week?(e.g. 23sep)"
 start_from = gets
