@@ -141,4 +141,4 @@ arr = strings.split
 i = 0
 arr.each{|x| arr[i] = x.tr('-','')
              i+=1}
-print "#{arr}\n"
+puts "#{arr}"
