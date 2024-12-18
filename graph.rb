@@ -1,5 +1,3 @@
-
-
 class UnionFind
   def initialize(size)
     @parent = Array.new(size) { |i| i }
