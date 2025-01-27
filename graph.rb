@@ -1,45 +1,54 @@
-def next_point(x,y,connected,called=[])
-    called << x
-     if connected.key?(x) && connected[x].include?(y)
-        return true
-    elsif connected.key?(x) && (connected[x]-called).any?
-        (connected[x]-called).each do |n|
-            if next_point(n,y,connected,called)==true
-                return true
-            end
-        end
-    elsif !connected.key?(x)
-        return false
-    elsif connected[x].include?(y)
-        return true   
-    else
-        return false
-    end
-end
+class UnionFind
+  def initialize(size)
+    @parent = Array.new(size) { |i| i }
+    @rank = Array.new(size, 0)
+  end
 
+  def find(x)
+    if @parent[x] != x
+      @parent[x] = find(@parent[x]) # Path compression
+    end
+    @parent[x]
+  end
+
+  def union(x, y)
+    root_x = find(x)
+    root_y = find(y)
+
+    return if root_x == root_y
+
+    if @rank[root_x] > @rank[root_y]
+      @parent[root_y] = root_x
+    elsif @rank[root_x] < @rank[root_y]
+      @parent[root_x] = root_y
+    else
+      @parent[root_y] = root_x
+      @rank[root_x] += 1
+    end
+  end
+
+end
 
 num = gets.chomp.split(" ")
 rows = []
-connected = {}
 (1..num[1].to_i).each do |x|
     rows << gets.chomp
 end
 
-connected = {}
-rows.each do |row|
-    col = row.split(" ")
-    if col[0] == "1"
-        if next_point(col[1],col[2],connected)==true
-            puts "1"
-        else
-            puts "0"
-        end
-    elsif col[0] == "0"
-        connected[col[1]] = connected.fetch(col[1],[]) 
-        connected[col[1]] << col[2]
-        connected[col[2]] = connected.fetch(col[2],[])
-        connected[col[2]] << col[1]
-    end
-end
+vertices = UnionFind.new(num[0])
 
-            
+# Processing queries
+rows.each do |row|
+  row = gets.chomp.split.map(&:to_i)
+  type, u, v = row[0], row[1].to_i, row[2].to_i
+
+  if type == 0
+    vertices.union(u, v)
+  elsif type == 1
+    if find(u)==find(v)
+      puts "1"
+    else
+      puts "0"
+    end
+  end
+end
