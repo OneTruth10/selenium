@@ -12,11 +12,11 @@ driver = Selenium::WebDriver.for :firefox, options:options
 driver.get "https://twitter.com/login?lang=ja"
 sleep 6
 driver.find_element(:xpath, '/html/body/div/div/div/div[1]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/div[5]/label/div/div[2]/div/input').click
-driver.find_element(:xpath, '/html/body/div/div/div/div[1]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/div[5]/label/div/div[2]/div/input').send_keys('sub_cactus',:return)
+driver.find_element(:xpath, '/html/body/div/div/div/div[1]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/div[5]/label/div/div[2]/div/input').send_keys('[Username]',:return)
 
 
 sleep 2
-driver.find_element(:name,'password').send_keys('k@zuma051o')
+driver.find_element(:name,'password').send_keys('[password]')
 driver.find_element(:name,'password').send_keys(:return)
 sleep 3
 driver.navigate.to('https://twitter.com/y_03715/with_replies')
