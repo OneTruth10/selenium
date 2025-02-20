@@ -14,8 +14,8 @@ wait.until { driver.find_element(tag_name: "input") }
 puts "page loaded"
 sleep 2
 
-driver.find_element(id: "guid").send_keys '3036012n'
-driver.find_element(id: "password").send_keys 'k@zuma051o'
+driver.find_element(id: "guid").send_keys '[ID]'
+driver.find_element(id: "password").send_keys '[Password]'
 sleep 1
 driver.find_element(class: "loginButton").click
 puts "password given"
